@@ -242,6 +242,9 @@ class NewsView(ListView):
 		n = News.objects.latest('date')
 		return n
 
+class NewsDetailView(DetailView):
+	model = News
+	template_name = "mood/news_detail.html"
 
 class EntryUpdate(LoginRequiredMixin, UpdateView):
 
