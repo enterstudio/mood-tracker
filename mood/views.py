@@ -245,6 +245,9 @@ class NewsView(ListView):
 				break #honestly just the easiest way of doing this.
 		return n
 
+class NewsDetailView(DetailView):
+	model = News
+	template_name = "mood/news_detail.html"
 
 class NewsDetailView(DetailView):
 	model = News
