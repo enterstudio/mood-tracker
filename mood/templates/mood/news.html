@@ -17,9 +17,11 @@
 			<h3> News Archive </h3>
 			<ul>
 				{% for thing in object_list reversed %}
-					<li>
-						<a href="{% url 'news_detail' thing.pk %}">{{ thing.date }} - {{ thing.title }}</a>
-					</li>
+					{% if thing.show %}
+						<li>
+							<a href="{% url 'news_detail' thing.pk %}">{{ thing.date }} - {{ thing.title }}</a>
+						</li>
+					{% endif %}
 				{% endfor %}
 			</ul>
 		</div>

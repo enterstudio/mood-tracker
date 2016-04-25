@@ -182,6 +182,7 @@ class EntryCreate(LoginRequiredMixin, CreateView):
 
     def dispatch(self, request, *args, **kwargs):
     	d = Day.objects.get(pk=self.kwargs.get('pk'))
+    	self.d = d
     	if d.user_id == request.user.id:
     		return super(EntryCreate, self).dispatch(request, *args, **kwargs)
     	else:
@@ -212,12 +213,11 @@ class EntryCreate(LoginRequiredMixin, CreateView):
     	return "/day/%s" % self.kwargs.get('pk')
 
     def get_date(self):
-    	d = Day.objects.get(pk=self.kwargs.get('pk'))
-    	return d.date
+    	return self.d.date
 
     def form_valid(self, form):
     	f = form.save(commit=False)
-    	f.day = Day.objects.get(pk=self.kwargs.get('pk'))
+    	f.day = self.d
     	f.user = self.request.user
     	return super(EntryCreate, self).form_valid(form)
 
@@ -239,8 +239,12 @@ class NewsView(ListView):
 	template_name = "mood/news.html"
 
 	def latest(self):
-		n = News.objects.latest('date')
+		n_set = News.objects.all().order_by('-date')
+		for n in n_set:
+			if n.show:
+				break #honestly just the easiest way of doing this.
 		return n
+
 
 class NewsDetailView(DetailView):
 	model = News
