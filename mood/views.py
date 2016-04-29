@@ -21,7 +21,7 @@ from django.utils.safestring import mark_safe
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from mood.forms import EntryAddForm, EntryUpdateForm
+from mood.forms import EntryAddForm, EntryUpdateForm, DrinkAddForm
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -257,12 +257,13 @@ class NewsDetailView(DetailView):
 class DrinkCreate(LoginRequiredMixin, CreateView):
 
 	model = Drink
+	form_class = DrinkAddForm
 
 	def dispatch(self, request, *args, **kwargs):
 		d = Day.objects.get(pk=self.kwargs.get('pk'))
 		self.d = d
 		if d.user_id == request.user.id:
-			return super(EntryCreate, self).dispatch(request, *args, **kwargs)
+			return super(DrinkCreate, self).dispatch(request, *args, **kwargs)
 		else:
 			raise Http404("Not Found")
 

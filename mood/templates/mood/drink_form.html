@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="content_size">
+    <form action="" method="post">{% csrf_token %}
+    <div class="form-group">
+      <div class="row">
+        <h1> Track a drink </h1>
+      </div>
+      <div class="col-md-5">
+        <div class="row">
+            <label for="id_name" class="creation_label"> {{ form.name.label }} </label>
+            {{ form.name }}
+        </div>
+        <div class="row">
+            <label for="id_calories" class="creation_label"> {{ form.calories.label }} </label>
+            {{ form.calories }}
+        </div>
+        <div class="row">
+            <label for="id_volume" class="creation_label"> {{ form.volume.label }} </label>
+            {{ form.volume }}
+        </div>
+        <div class="row">
+            <label for="id_volume" class="creation_label"> Track Daily? </label>
+            {{ form.track_daily }}
+        </div>
+        <div class="row">
+          <input type="submit" value="Save" class="btn btn-success"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}
+
+{% block extra_body %}
+  <script>
+    $("[name='track_daily']").bootstrapSwitch();
+  </script>
+{% endblock extra_body %}

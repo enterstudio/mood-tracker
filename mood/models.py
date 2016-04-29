@@ -47,11 +47,10 @@ class Entry(models.Model):
 		return reverse('entry_edit', kwargs={'pk' : self.pk })
 
 class Attribute(models.Model):
-	day = models.ForeignKey(Day, on_delete=models.CASCADE, null=True)
+	day = models.ForeignKey(Day, on_delete=models.CASCADE)
 	user = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
-		on_delete=models.CASCADE,
-		null=True
+		on_delete=models.CASCADE
         )
 	created = models.DateTimeField(auto_now_add=True)
 	track_daily = models.BooleanField()
