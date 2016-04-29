@@ -21,14 +21,14 @@
 							<div class="content_size">
 							<div class="row-fluid">
 								<div class="col-sm-offset-1 latest_date">
-								
+
 									<h2>{{ latest_entry }}</h2>
 								</div>
 							</div>
 							{% if latest_entry.description %}
 							<div class="row">
 								<div class="col-sm-offset-1 col-sm-10 latest_desc">
-									<h4>{{ latest_entry.description }}</h4>
+									<h4>{{ latest_entry.description | linebreaks }}</h4>
 								</div>
 							</div>
 						{% endif %}
@@ -79,6 +79,6 @@
 					{% endfor %}
 				</div>
 			{% else %}
-				
+
 			{% endif %}
 		</div>

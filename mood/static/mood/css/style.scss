@@ -10,6 +10,7 @@ $entry-horizontal-padding: 0px;
 $entry-panel-offset: 10px;
 
 $site-link-color: #FFA600;
+$slider-handle-color: #5bc0de;
 
 $content-size: 95%;
 
@@ -102,7 +103,7 @@ a{
 
 		.slider_handle{
 			height: 20px;
-			background-color: #5bc0de;
+			background-color: $slider-handle-color;
 			text-align: center;
 			vertical-align: middle;
 			font-size: $slider-handle-size+1;
@@ -275,7 +276,7 @@ a{
 	padding-bottom: 20px;
 	background-color: #f5e059;
 	margin-left: 20px;
-	
+
 
 	h4{
 		padding-left: 0px;
