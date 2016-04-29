@@ -39,7 +39,7 @@ class Entry(models.Model):
 	energy_level = models.IntegerField(choices=MOOD_RATING_CHOICES, default=0)
 	motivation_level = models.IntegerField(choices=MOOD_RATING_CHOICES, default=0)
 
-	
+
 	def __str__(self):
 		return str(self.get_tod_display())
 
@@ -47,9 +47,16 @@ class Entry(models.Model):
 		return reverse('entry_edit', kwargs={'pk' : self.pk })
 
 class Attribute(models.Model):
+	day = models.ForeignKey(Day, on_delete=models.CASCADE, null=True)
+	user = models.ForeignKey(
+		settings.AUTH_USER_MODEL,
+		on_delete=models.CASCADE,
+		null=True
+        )
 	created = models.DateTimeField(auto_now_add=True)
 	track_daily = models.BooleanField()
-	name = models.CharField(max_length=75)
+	name = models.CharField(max_length=150)
+
 
 class Consumable(Attribute):
 	pass
@@ -71,8 +78,3 @@ class News(models.Model):
 
 	def __str__(self):
 		return self.title
-
-
-
-
-

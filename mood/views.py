@@ -13,7 +13,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.dates import MonthArchiveView
 
-from mood.models import Day, Entry, News
+from mood.models import Day, Entry, News, Attribute, Consumable, Dietary, Drink
 
 from mood.DayCalendar import DayCalendar
 
@@ -94,13 +94,13 @@ class DayCalendarView(LoginRequiredMixin, TemplateView):
 		return [month, year]
 
 	def get_context_data(self, **kwargs):
-		context = super(DayCalendarView, self).get_context_data(**kwargs) 
+		context = super(DayCalendarView, self).get_context_data(**kwargs)
 		context['prev_month'] = self.get_prev_month()[0]
 		context['prev_year'] = self.get_prev_month()[1]
 		context['next_month'] = self.get_next_month()[0]
 		context['next_year'] = self.get_next_month()[1]
 		return context
- 
+
 	def show_calendar(self):
 		year = self.kwargs.get('year')
 		month = self.kwargs.get('month')
@@ -172,54 +172,54 @@ class DayCreate(LoginRequiredMixin, TemplateView):
 			return redirect(url)
 		else:
 			raise Http404("Not Found")
-		
+
 
 
 class EntryCreate(LoginRequiredMixin, CreateView):
 
-    model = Entry
-    form_class = EntryAddForm
+	model = Entry
+	form_class = EntryAddForm
 
-    def dispatch(self, request, *args, **kwargs):
-    	d = Day.objects.get(pk=self.kwargs.get('pk'))
-    	self.d = d
-    	if d.user_id == request.user.id:
-    		return super(EntryCreate, self).dispatch(request, *args, **kwargs)
-    	else:
-    		raise Http404("Not Found")
+	def dispatch(self, request, *args, **kwargs):
+		d = Day.objects.get(pk=self.kwargs.get('pk'))
+		self.d = d
+		if d.user_id == request.user.id:
+			return super(EntryCreate, self).dispatch(request, *args, **kwargs)
+		else:
+			raise Http404("Not Found")
 
-    def get_initial(self):
-    	initial = super(EntryCreate, self).get_initial()
+	def get_initial(self):
+		initial = super(EntryCreate, self).get_initial()
 
-    	try:
-    		e = Entry.objects.filter(user__id=self.request.user.id).latest('created')
-    		initial['happiness_level'] = e.happiness_level
-    		initial['motivation_level']  = e.motivation_level
-    		initial['anger_level'] = e.anger_level
-    		initial['anxiety_level'] = e.anxiety_level
-    		initial['energy_level'] = e.energy_level
-    		return initial
-    	except:
-    		initial['happiness_level']=0
-    		initial['motivation_level']=0
-    		initial['anger_level']=0
-    		initial['anxiety_level']=0
-    		initial['energy_level']=0
-    		return initial
+		try:
+			e = Entry.objects.filter(user__id=self.request.user.id).latest('created')
+			initial['happiness_level'] = e.happiness_level
+			initial['motivation_level']  = e.motivation_level
+			initial['anger_level'] = e.anger_level
+			initial['anxiety_level'] = e.anxiety_level
+			initial['energy_level'] = e.energy_level
+			return initial
+		except:
+			initial['happiness_level']=0
+			initial['motivation_level']=0
+			initial['anger_level']=0
+			initial['anxiety_level']=0
+			initial['energy_level']=0
+			return initial
 
 
 
-    def get_success_url(self):
-    	return "/day/%s" % self.kwargs.get('pk')
+	def get_success_url(self):
+		return "/day/%s" % self.kwargs.get('pk')
 
-    def get_date(self):
-    	return self.d.date
+	def get_date(self):
+		return self.d.date
 
-    def form_valid(self, form):
-    	f = form.save(commit=False)
-    	f.day = self.d
-    	f.user = self.request.user
-    	return super(EntryCreate, self).form_valid(form)
+	def form_valid(self, form):
+		f = form.save(commit=False)
+		f.day = self.d
+		f.user = self.request.user
+		return super(EntryCreate, self).form_valid(form)
 
 class EntryDelete(LoginRequiredMixin, DeleteView):
 
@@ -250,8 +250,22 @@ class NewsDetailView(DetailView):
 	template_name = "mood/news_detail.html"
 
 class NewsDetailView(DetailView):
+
 	model = News
 	template_name = "mood/news_detail.html"
+
+class DrinkCreate(LoginRequiredMixin, CreateView):
+
+	model = Drink
+
+	def dispatch(self, request, *args, **kwargs):
+		d = Day.objects.get(pk=self.kwargs.get('pk'))
+		self.d = d
+		if d.user_id == request.user.id:
+			return super(EntryCreate, self).dispatch(request, *args, **kwargs)
+		else:
+			raise Http404("Not Found")
+
 
 class EntryUpdate(LoginRequiredMixin, UpdateView):
 

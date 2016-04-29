@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.views.generic import RedirectView, TemplateView, DetailView
 
-from mood.views import ProfileView, DayView, EntryCreate, EntryUpdate, EntryDelete, DayCalendarView, DayCreate, NewsView, NewsDetailView
+from mood.views import ProfileView, DayView, EntryCreate, EntryUpdate, EntryDelete, DayCalendarView, DayCreate, NewsView, NewsDetailView, DrinkCreate
 
 urlpatterns = [
 	url(r'^accounts/', include('allauth.urls')),
@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='mood/about.html'), name='about'),
     url(r'^news/$', NewsView.as_view(), name='news'),
     url(r'^news/(?P<pk>[0-9]+)/$', NewsDetailView.as_view(), name='news_detail'),
+	url(r'^drink/add/(?P<pk>[0-9]+)/$', DrinkCreate.as_view(), name='drink_add'),
 ]
