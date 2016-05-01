@@ -54,6 +54,7 @@ class Attribute(models.Model):
         )
 	created = models.DateTimeField(auto_now_add=True)
 	track_daily = models.BooleanField()
+	tod = models.CharField(max_length=1, choices=TIME_OF_DAY_CHOICES)
 	name = models.CharField(max_length=150)
 
 

@@ -41,12 +41,16 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 			context['latest_day'] = d
 			context['latest_date'] = d.date
 			context['latest_day_value'] = d.date.day
+			self.d = d;
 			return context
 		except:
 			return context
 
 	def get_user_id(self):
 		return self.request.user.id;
+
+	def get_day_id(self):
+		return self.d.id
 
 	def get_username(self):
 		return self.request.user.get_username()
@@ -261,11 +265,21 @@ class DrinkCreate(LoginRequiredMixin, CreateView):
 
 	def dispatch(self, request, *args, **kwargs):
 		d = Day.objects.get(pk=self.kwargs.get('pk'))
-		self.d = d
+		self.this_day = d
 		if d.user_id == request.user.id:
 			return super(DrinkCreate, self).dispatch(request, *args, **kwargs)
 		else:
 			raise Http404("Not Found")
+
+	def get_success_url(self):
+		return "/day/%s" % self.kwargs.get('pk')
+
+	def form_valid(self, form):
+		print("asdasdas")
+		f = form.save(commit=False)
+		f.day = self.this_day
+		f.user = self.request.user
+		return super(DrinkCreate, self).form_valid(form)
 
 
 class EntryUpdate(LoginRequiredMixin, UpdateView):

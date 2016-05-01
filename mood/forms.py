@@ -24,10 +24,10 @@ class DrinkAddForm(forms.ModelForm):
         exclude = ['day','user']
 
     name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class':'attr_name form-control'}))
-    track_daily = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'track_daily_field'}))
-    calories = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'calories_field form-control'}))
-    volume = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'volume_field form-control'}))
-
+    track_daily = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class':'track_daily_field'}))
+    calories = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'calories_field form-control'}), initial=0.00, min_value=0.0)
+    volume = forms.DecimalField(widget=forms.NumberInput(attrs={'class':'volume_field form-control'}), initial=0.00, min_value=0.0)
+    tod = forms.ChoiceField(choices = TIME_OF_DAY_CHOICES, label = "Time of Day", required=True, widget=forms.Select(attrs={'class':'entry_field'}))
 
 
 

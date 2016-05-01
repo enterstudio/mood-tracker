@@ -276,16 +276,54 @@ a{
 	margin-top: 5px;
 }
 
-.latest_date_panel, .diet_panel{
+.attr_form {
+
+	label{
+		color: gray;
+	}
+
+	.dropdown{
+		width: 100%;
+		padding-left: 0px;
+
+		.btn{
+			margin-top: 0px;
+			margin-bottom: 9px;
+
+		}
+	}
+
+	.creation_label {
+		margin-right: 9px;
+		vertical-align: middle;
+	}
+
+	.form-control {
+		margin-bottom: 10px;
+
+	}
+
+	.calories_field, .volume_field {
+		height: 40pt;
+		padding-left: 25px;
+		text-align: center;
+		font-size: 32pt;
+		width: 180px;
+	}
+
+}
+
+.latest_date_panel, .diet_panel {
 	padding-bottom: 20px;
 	background-color: #f5e059;
 	margin-left: 20px;
 
 
-	h4{
+	h4 {
 		padding-left: 0px;
 		margin-top: 5px;
 		margin-bottom: 0px;
+
 	}
 
 	.entry_header{

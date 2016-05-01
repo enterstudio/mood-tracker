@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+
+{% load compress %}
+{% compress js %}
+    <script src="/static/mood/scripts/entry.js"></script>
+{% endcompress %}
+ {% endblock %}
+
 {% block content %}
 
   <div class="content_size">
     <form action="" method="post">{% csrf_token %}
-    <div class="form-group">
+    <div class="form-group attr_form">
       <div class="row">
         <h1> Track a drink </h1>
       </div>
@@ -22,7 +30,22 @@
             {{ form.volume }}
         </div>
         <div class="row">
-            <label for="id_volume" class="creation_label"> Track Daily? </label>
+          <label for="tod_dropdown" class="creation_label"> Time of Day </label>
+          <div class="dropdown button_fill col-md-6">
+              <button class="btn btn-primary dropdown-toggle" id="tod_dropdown" type="button" data-toggle="dropdown">Morning (Select to Change)<span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#" onclick="time_of_day('Morning');return false;">Morning</a></li>
+                <li><a href="#" onclick="time_of_day('Afternoon');return false;">Afternoon</a></li>
+                <li><a href="#" onclick="time_of_day('Evening');return false;">Evening</a></li>
+                <li><a href="#" onclick="time_of_day('Night');return false;">Night</a></li>
+              </ul>
+            </div>
+            {{ form.tod }}
+        </div>
+        <div class="row">
+            <div class="clearfix">
+              <label for="id_volume" class="creation_label"> Track Daily? </label>
+            </div>
             {{ form.track_daily }}
         </div>
         <div class="row">
