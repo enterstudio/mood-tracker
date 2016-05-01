@@ -4,6 +4,8 @@ http://mood.marcelli.ca/about
 
 #Installation to help dev:
 
+#Please note that you can do all this without using MySQL and just use the SQLite database, but please *please* let me know that you aren't using the dev environment in your pull requests. 
+
 ##Step 1:
 
 `git clone git@github.com:lucasmarcelli/mood-tracker.git`
